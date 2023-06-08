@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Vaccination Centre{% endblock %}
+
+{% block content %}
+    <h1>Add Vaccination Centre</h1>
+    <form method="POST" action="{{ url_for('add_centre') }}">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="working_hours">Working Hours:</label>
+            <input type="text" class="form-control" id="working_hours" name="working_hours" required>
+        </div>
+        <div class="form-group">
+            <label for="slots">Slots:</label>
+            <input type="number" class="form-control" id="slots" name="slots" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Centre</button>
+    </form>
+{% endblock %}

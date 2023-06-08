@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}COVID Vaccination Booking{% endblock %}
+
+{% block content %}
+    <h1>Welcome to the COVID Vaccination Booking System</h1>
+    <h2><a href="{{ url_for('user_dashboard') }}">Book your slots now!!!</a></h2>
+    <h2><a href="{{ url_for('admin') }}">Admin? Click here!!!</a></h2>
+{% endblock %}
+

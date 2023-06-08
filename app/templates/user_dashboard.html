@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+    <h1>User Dashboard</h1>
+    <div class="row mb-4">
+        <div class="col">
+            <form method="GET" action="{{ url_for('user_dashboard') }}">
+                <div class="input-group">
+                    <input type="text" name="search_query" class="form-control" placeholder="Search Vaccination Centres">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <h2>Vaccination Centres:</h2>
+    <div class="list-group">
+        {% for centre in centres %}
+            <div class="list-group-item list-group-item-action">
+                <div class="d-flex justify-content-between align-items-center">
+                    <strong>{{ centre.name }}</strong>
+                    <span class="badge badge-info">{{ centre.working_hours }}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Remaining Slots: {{ centre.slots }}</span>
+                    {% if centre.slots > 0 %}
+                        <form method="POST" action="{{ url_for('register') }}">
+                            {{ form.csrf_token }}
+                            <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+                            <input type="hidden" name="centre_id" value="{{ centre.id }}">
+                            <input type="hidden" name="centre_name" value="{{ centre.name }}">
+                            <input type="hidden" name="working_hours" value="{{ centre.working_hours }}">
+                            <button type="submit" class="btn btn-primary btn-sm">Book</button>
+                        </form>
+                    {% else %}
+                        <span class="badge badge-danger">Fully Booked</span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

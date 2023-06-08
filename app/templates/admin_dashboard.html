@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Admin Dashboard</h1>
+    <h2>Vaccination Centres:</h2>
+    <ul>
+        {% for centre in centres %}
+            <li>{{ centre.name }} - Working Hours: {{ centre.working_hours }} - Slots: {{ centre.slots }}</li>
+            <form method="POST" action="{{ url_for('remove_centre', centre_id=centre.id) }}">
+                <button type="submit" class="btn btn-danger">Remove</button>
+            </form>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('add_centre') }}" class="btn btn-primary">Add Vaccination Centre</a>
+
+    <h2>Get Dosage Details:</h2>
+    <form method="POST" action="{{ url_for('admin_dashboard') }}">
+        <button type="submit" class="btn btn-info">Get Dosage Details</button>
+    </form>
+
+    {% if dosage_details %}
+        <h2>Dosage Details:</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Centre Name</th>
+                    <th>Number of Dosage</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for centre, dosage in dosage_details.items() %}
+                    <tr>
+                        <td>{{ centre.name }}</td>
+                        <td>{{ dosage }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
